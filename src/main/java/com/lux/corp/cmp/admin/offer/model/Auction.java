@@ -10,6 +10,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -25,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author fabrea082
  */
 @Entity
-@Table(name = "Auction")
+@Table(name = "auction")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Auction.findAll", query = "SELECT a FROM Auction a")
@@ -35,11 +37,13 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Auction.findByAuctUser", query = "SELECT a FROM Auction a WHERE a.auctUser = :auctUser")
     , @NamedQuery(name = "Auction.findByAuctDateRegister", query = "SELECT a FROM Auction a WHERE a.auctDateRegister = :auctDateRegister")
     , @NamedQuery(name = "Auction.findByAuctValueInit", query = "SELECT a FROM Auction a WHERE a.auctValueInit = :auctValueInit")
-    , @NamedQuery(name = "Auction.findBySubaValueFinish", query = "SELECT a FROM Auction a WHERE a.subaValueFinish = :subaValueFinish")})
+    , @NamedQuery(name = "Auction.findByAuctValueFinish", query = "SELECT a FROM Auction a WHERE a.auctValueFinish = :auctValueFinish")
+    , @NamedQuery(name = "Auction.findByAuctioncol", query = "SELECT a FROM Auction a WHERE a.auctioncol = :auctioncol")})
 public class Auction implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "pk_auct_id")
     private Integer pkAuctId;
@@ -58,8 +62,10 @@ public class Auction implements Serializable {
     private Date auctDateRegister;
     @Column(name = "auct_value_init")
     private String auctValueInit;
-    @Column(name = "suba_value_finish")
-    private String subaValueFinish;
+    @Column(name = "auct_value_finish")
+    private String auctValueFinish;
+    @Column(name = "auctioncol")
+    private String auctioncol;
     @JoinColumn(name = "fk_client_id", referencedColumnName = "pk_client_id")
     @ManyToOne
     private Client fkClientId;
@@ -128,12 +134,20 @@ public class Auction implements Serializable {
         this.auctValueInit = auctValueInit;
     }
 
-    public String getSubaValueFinish() {
-        return subaValueFinish;
+    public String getAuctValueFinish() {
+        return auctValueFinish;
     }
 
-    public void setSubaValueFinish(String subaValueFinish) {
-        this.subaValueFinish = subaValueFinish;
+    public void setAuctValueFinish(String auctValueFinish) {
+        this.auctValueFinish = auctValueFinish;
+    }
+
+    public String getAuctioncol() {
+        return auctioncol;
+    }
+
+    public void setAuctioncol(String auctioncol) {
+        this.auctioncol = auctioncol;
     }
 
     public Client getFkClientId() {

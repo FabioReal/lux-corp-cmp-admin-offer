@@ -11,6 +11,8 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -28,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author fabrea082
  */
 @Entity
-@Table(name = "Subcategory")
+@Table(name = "subcategory")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Subcategory.findAll", query = "SELECT s FROM Subcategory s")
@@ -41,6 +43,7 @@ public class Subcategory implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "pk_subca_id")
     private Integer pkSubcaId;
@@ -53,11 +56,11 @@ public class Subcategory implements Serializable {
     @Column(name = "subca_date_register")
     @Temporal(TemporalType.TIMESTAMP)
     private Date subcaDateRegister;
+    @OneToMany(mappedBy = "fkSubcaId")
+    private List<Product> productList;
     @JoinColumn(name = "fk_categ_id", referencedColumnName = "pk_cate_id")
     @ManyToOne(optional = false)
     private Category fkCategId;
-    @OneToMany(mappedBy = "fkSubcaId")
-    private List<Product> productList;
 
     public Subcategory() {
     }
@@ -106,14 +109,6 @@ public class Subcategory implements Serializable {
         this.subcaDateRegister = subcaDateRegister;
     }
 
-    public Category getFkCategId() {
-        return fkCategId;
-    }
-
-    public void setFkCategId(Category fkCategId) {
-        this.fkCategId = fkCategId;
-    }
-
     @XmlTransient
     public List<Product> getProductList() {
         return productList;
@@ -121,6 +116,14 @@ public class Subcategory implements Serializable {
 
     public void setProductList(List<Product> productList) {
         this.productList = productList;
+    }
+
+    public Category getFkCategId() {
+        return fkCategId;
+    }
+
+    public void setFkCategId(Category fkCategId) {
+        this.fkCategId = fkCategId;
     }
 
     @Override

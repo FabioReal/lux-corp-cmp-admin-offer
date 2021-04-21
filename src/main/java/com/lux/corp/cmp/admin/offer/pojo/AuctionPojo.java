@@ -13,9 +13,9 @@ public class AuctionPojo {
 	private Date auctInit;
 	private Date auctEnd;
 	private String auctValueInit;
-	private String subaValueFinish;
-	private Integer fkClientId;
-	private Integer fkProductId;
+	private String auctValueFinish;
+	private ClientPojo fkClientId;
+	private ProductPojo fkProductId;
 
 	public AuctionPojo() {
 	}
@@ -62,27 +62,27 @@ public class AuctionPojo {
 		this.auctValueInit = auctValueInit;
 	}
 
-	public String getSubaValueFinish() {
-		return subaValueFinish;
+	public String getAuctValueFinish() {
+		return auctValueFinish;
 	}
 
-	public void setSubaValueFinish(String subaValueFinish) {
-		this.subaValueFinish = subaValueFinish;
+	public void setAuctValueFinish(String auctValueFinish) {
+		this.auctValueFinish = auctValueFinish;
 	}
 
-	public Integer getFkClientId() {
+	public ClientPojo getFkClientId() {
 		return fkClientId;
 	}
 
-	public void setFkClientId(Integer fkClientId) {
+	public void setFkClientId(ClientPojo fkClientId) {
 		this.fkClientId = fkClientId;
 	}
 
-	public Integer getFkProductId() {
+	public ProductPojo getFkProductId() {
 		return fkProductId;
 	}
 
-	public void setFkProductId(Integer fkProductId) {
+	public void setFkProductId(ProductPojo fkProductId) {
 		this.fkProductId = fkProductId;
 	}
 

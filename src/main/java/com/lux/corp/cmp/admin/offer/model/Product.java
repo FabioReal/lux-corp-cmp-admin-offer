@@ -6,10 +6,13 @@
 package com.lux.corp.cmp.admin.offer.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -17,6 +20,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -25,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author fabrea082
  */
 @Entity
-@Table(name = "Product")
+@Table(name = "product")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p")
@@ -35,11 +40,13 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Product.findByProductValueOffer", query = "SELECT p FROM Product p WHERE p.productValueOffer = :productValueOffer")
     , @NamedQuery(name = "Product.findByProductDateRegister", query = "SELECT p FROM Product p WHERE p.productDateRegister = :productDateRegister")
     , @NamedQuery(name = "Product.findByProductUser", query = "SELECT p FROM Product p WHERE p.productUser = :productUser")
-    , @NamedQuery(name = "Product.findByProductValue", query = "SELECT p FROM Product p WHERE p.productValue = :productValue")})
+    , @NamedQuery(name = "Product.findByProductValue", query = "SELECT p FROM Product p WHERE p.productValue = :productValue")
+    , @NamedQuery(name = "Product.findByProductcol", query = "SELECT p FROM Product p WHERE p.productcol = :productcol")})
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "pk_product_id")
     private Integer pkProductId;
@@ -52,16 +59,19 @@ public class Product implements Serializable {
     @Column(name = "product_value_offer")
     private String productValueOffer;
     @Column(name = "product_date_register")
-    private String productDateRegister;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date productDateRegister;
     @Column(name = "product_user")
     private String productUser;
     @Column(name = "product_value")
     private String productValue;
-    @OneToMany(mappedBy = "fkProductId")
-    private List<Auction> auctionList;
+    @Column(name = "productcol")
+    private String productcol;
     @JoinColumn(name = "fk_subca_id", referencedColumnName = "pk_subca_id")
     @ManyToOne
     private Subcategory fkSubcaId;
+    @OneToMany(mappedBy = "fkProductId")
+    private List<Auction> auctionList;
 
     public Product() {
     }
@@ -108,11 +118,11 @@ public class Product implements Serializable {
         this.productValueOffer = productValueOffer;
     }
 
-    public String getProductDateRegister() {
+    public Date getProductDateRegister() {
         return productDateRegister;
     }
 
-    public void setProductDateRegister(String productDateRegister) {
+    public void setProductDateRegister(Date productDateRegister) {
         this.productDateRegister = productDateRegister;
     }
 
@@ -132,13 +142,12 @@ public class Product implements Serializable {
         this.productValue = productValue;
     }
 
-    @XmlTransient
-    public List<Auction> getAuctionList() {
-        return auctionList;
+    public String getProductcol() {
+        return productcol;
     }
 
-    public void setAuctionList(List<Auction> auctionList) {
-        this.auctionList = auctionList;
+    public void setProductcol(String productcol) {
+        this.productcol = productcol;
     }
 
     public Subcategory getFkSubcaId() {
@@ -147,6 +156,15 @@ public class Product implements Serializable {
 
     public void setFkSubcaId(Subcategory fkSubcaId) {
         this.fkSubcaId = fkSubcaId;
+    }
+
+    @XmlTransient
+    public List<Auction> getAuctionList() {
+        return auctionList;
+    }
+
+    public void setAuctionList(List<Auction> auctionList) {
+        this.auctionList = auctionList;
     }
 
     @Override

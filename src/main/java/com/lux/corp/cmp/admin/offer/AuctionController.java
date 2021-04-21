@@ -17,13 +17,10 @@ public class AuctionController {
 	@Autowired
 	ConvertModel convertModel;
 	
-	@Autowired
-	AuctionRepository auctionRepository;
 
 	public Boolean saveAuction(AuctionPojo requestAuctionPojo) {
 		try {
-			requestAuctionPojo.setAuctInit(new java.sql.Timestamp(System.currentTimeMillis()));
-			auctionRepository.save(convertModel.convertAuction(requestAuctionPojo));
+			convertModel.convertAuction(requestAuctionPojo);
 			return true;
 		} catch (Exception e) {
 			// TODO: handle exception

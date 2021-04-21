@@ -7,6 +7,6 @@ import com.lux.corp.cmp.admin.offer.model.Auction;
 
 
 @Repository
-public interface AuctionRepository extends CrudRepository<Auction, String>{
+public interface AuctionRepository extends CrudRepository<Auction, Long>{
 
 }
